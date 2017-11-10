@@ -163,13 +163,11 @@ class Validator(IFileValidator):
             return False
         return True
 
-    # Hasitha
     def check_bmi(self, bmi):
         if not self.check_hud(self.bmi_rule, str(bmi)):
             return False
         return True
 
-    # Hasitha
     def check_salary(self, salary):
         if not self.check_hud(self.salary_rule, str(salary)):
             return False
@@ -179,10 +177,7 @@ class Validator(IFileValidator):
     def check_birthday(self, birthday):
         try:
             day_month_year = birthday.split("-")
-            day = int(day_month_year[0])
-            month = int(day_month_year[1])
-            year = int(day_month_year[2])
-            date.datetime(year, month, day)
+            date.datetime(int(day_month_year[2]), int(day_month_year[1]),day = int(day_month_year[0]))
             return True
         except ValueError:
             print('The date was invalid', file=sys.stderr)
@@ -194,25 +189,22 @@ class Validator(IFileValidator):
     # Tim
     def check_birthday_against_age(self, birthday, age):
 
-        if not self.check_birthday(birthday):
-            return False
+        if self.check_birthday(birthday):
+            return
         else:
             day_month_year = birthday.split("-")
-            day = int(day_month_year[0])
-            month = int(day_month_year[1])
-            year = int(day_month_year[2])
             # adding age because we just want to compare month and day
-            birth = date.datetime(year, month, day)
+            birth = date.datetime(int(day_month_year[2]), int(day_month_year[1]), int(day_month_year[0]))
             today = date.datetime.today()
             if birth.month < today.month:
                 # Had a birthday already this year
-                return int(age) == today.year - year
+                return int(age) == today.year - int(day_month_year[2])
             elif birth.month == today.month and birth.day < today.day:
                 # Had a birthday already this year (this month)
-                return int(age) == today.year - year
+                return int(age) == today.year - int(day_month_year[2])
             else:
                 # Hasn't had a birthday yet this year.
-                return int(age) == today.year - year - 1
+                return int(age) == today.year - int(day_month_year[2]) - 1
 
     # Tim
     def check_in_attributes(self, query_attribute):
