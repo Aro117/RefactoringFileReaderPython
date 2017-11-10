@@ -128,147 +128,51 @@ class Validator(IFileValidator):
             return False
         return True
 
-    # Rosemary
-    def check_id(self, emp_id):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_id('M000')
-        True
-        >>> v.check_id('F999')
-        True
-        >>> v.check_id('m000')
-        False
-        >>> v.check_id('F9999')
-        False
-        >>> v.check_id('MMMM')
-        False
-        >>> v.check_id('0000')
-        False
-        >>> v.check_id('000')
-        False
-        >>> v.check_id('M00')
-        False
-        >>> v.check_id(None)
-        False
-        >>> v.check_id(1)
-        False
-        >>> v.check_id(True)
-        False
-        >>> v.check_id({'M00'})
-        False
-        """
-        # Should be in form of [A-Z][0-9]{3}
-        # Exception handling by Tim
+    def check_hud(self, rule, value):
+
         try:
-            if not re.match(self.id_rule, emp_id):
-                print('{} is invalid!'.format(emp_id), file=sys.stderr)
+            if not re.match(rule, value):
+                print('{} is invalid!'.format(value), file=sys.stderr)
                 return False
             else:
-                # Failing to invalidate is a success
                 return True
         except TypeError:
             return False
 
-    # Tim
-    def check_age(self, age):
-        # Should be between 1-99
-        try:
-            if not re.match(self.age_rule, str(age)):
-                print('{} is invalid age!'.format(age), file=sys.stderr)
-                return False
-        except TypeError:
+    # Rosemary
+    def check_id(self, emp_id):
+        if not self.check_hud(self.id_rule, str(emp_id)):
             return False
-        # Failing to invalidate is a success
         return True
 
-    # Hasitha
-    def check_gender(self, gender):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_gender('M')
-        True
-        >>> v.check_gender('F')
-        True
-        >>> v.check_gender('MF')
-        False
-        >>> v.check_gender('m')
-        False
-        >>> v.check_gender('f')
-        False
-        >>> v.check_gender(1)
-        False
-        >>> v.check_gender(True)
-        False
-        >>> v.check_gender(None)
-        False
-        """
-        # Exception handling by Tim
-        try:
-            if not re.match(self.gender_rule, gender):
-                print('{} is invalid gender!'.format(gender), file=sys.stderr)
-                return False
-        except TypeError:
+    def check_age(self, age):
+        # Should be between 1-99
+        if not self.check_hud(self.age_rule, str(age)):
             return False
-        # Failing to invalidate is a success
+        return True
+
+
+    def check_gender(self, gender):
+        if not self.check_hud(self.gender_rule, str(gender)):
+            return False
         return True
 
     # Rosemary
     def check_sales(self, sales):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_sales(-1)
-        False
-        >>> v.check_sales('000')
-        True
-        >>> v.check_sales('001')
-        True
-        >>> v.check_sales(2.5)
-        False
-        >>> v.check_sales('999')
-        True
-        >>> v.check_sales('1000')
-        False
-        >>> v.check_sales("1")
-        False
-        >>> v.check_sales(1)
-        False
-        >>> v.check_sales(999)
-        False
-        """
-        try:
-            if not re.match(self.sales_rule, sales):
-                print('{} is invalid sales!'.format(sales), file=sys.stderr)
-                return False
-        except TypeError:
+        if not self.check_hud(self.sales_rule, str(sales)):
             return False
-        # Failing to invalidate is a success
         return True
 
     # Hasitha
     def check_bmi(self, bmi):
-        # Exception handling by Tim
-        try:
-            if not re.match(self.bmi_rule, bmi):
-                print('{} is invalid BMI!'.format(bmi), file=sys.stderr)
-                return False
-        except TypeError:
+        if not self.check_hud(self.bmi_rule, str(bmi)):
             return False
-        # Failing to invalidate is a success
         return True
 
     # Hasitha
     def check_salary(self, salary):
-        # Exception handling by Tim
-        try:
-            if not re.match(self.salary_rule, salary):
-                print('{} is invalid Salary!'.format(salary), file=sys.stderr)
-                return False
-        except TypeError:
+        if not self.check_hud(self.salary_rule, str(salary)):
             return False
-        # Failing to invalidate is a success
         return True
 
     # Tim
@@ -289,24 +193,7 @@ class Validator(IFileValidator):
 
     # Tim
     def check_birthday_against_age(self, birthday, age):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_birthday_against_age('19-06-1988', 28)
-        False
-        >>> v.check_birthday_against_age('19-06-1988', 29)
-        True
-        >>> v.check_birthday_against_age('19-06-1988', 30)
-        False
-        >>> v.check_birthday_against_age('19-12-1988', 27)
-        False
-        >>> v.check_birthday_against_age('19-12-1988', 28)
-        True
-        >>> v.check_birthday_against_age('19-12-1988', 29)
-        False
-        >>> v.check_birthday_against_age('19-12-1988', 30)
-        False
-        """
+
         if not self.check_birthday(birthday):
             return False
         else:
@@ -329,30 +216,7 @@ class Validator(IFileValidator):
 
     # Tim
     def check_in_attributes(self, query_attribute):
-        # Tim
-        """
-        >>> v = Validator()
-        >>> v.check_in_attributes("EMPID")
-        True
-        >>> v.check_in_attributes("GENDER")
-        True
-        >>> v.check_in_attributes("AGE")
-        True
-        >>> v.check_in_attributes("SALES")
-        True
-        >>> v.check_in_attributes("BMI")
-        True
-        >>> v.check_in_attributes("SALARY")
-        True
-        >>> v.check_in_attributes("BIRTHDAY")
-        True
-        >>> v.check_in_attributes("Salary")
-        True
-        >>> v.check_in_attributes("SALE")
-        False
-        >>> v.check_in_attributes(1)
-        False
-        """
+
         try:
             return query_attribute.upper() in self.attributes
         except AttributeError:

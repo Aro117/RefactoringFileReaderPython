@@ -57,24 +57,6 @@ class FileHandler:
 
     # hasitha
     def csv_dict_reader(self, filename):
-        """
-        >>> f = FileHandler(Validator())
-        >>> result = f.csv_dict_reader("data.csv")
-        >>> print(result[0]['EMPID'])
-        A001
-        >>> print(result[0]['GENDER'])
-        F
-        >>> print(result[0]['AGE'])
-        21
-        >>> print(result[0]['SALES'])
-        001
-        >>> print(result[0]['BMI'])
-        Normal
-        >>> print(result[0]['BIRTHDAY'])
-        1-1-1996
-        >>> print(result[0]['SALARY'])
-        12
-        """
         try:
             with open(filename) as f_obj:
                 reader = csv.DictReader(f_obj, delimiter=',')
@@ -129,15 +111,7 @@ class FileHandler:
     # Rosemary
     @staticmethod
     def open_help(help_command):
-        """
-        >>> f = FileHandler(new_validator=Validator)
-        >>> print(f.open_help('line'))
-        line command vitualize the data.
-        >>> print(f.open_help('help'))
-        help command brings out all command.
-        >>> print(f.open_help('helpp'))
-        No such command.
-        """
+
         try:
             file = open("help.txt", "r")
             for line in file:
@@ -150,26 +124,9 @@ class FileHandler:
         except FileNotFoundError:
             print('The help file was not found', file=sys.stderr)
         return "No such command."
-        
+
     def excel_reader(self, filename):
-        """
-        >>> f = FileHandler(Validator())
-        >>> result = f.excel_reader("testingdata.xlsx")
-        >>> print(result[0]['EMPID'])
-        A001
-        >>> print(result[0]['GENDER'])
-        F
-        >>> print(result[0]['AGE'])
-        21
-        >>> print(result[0]['SALES'])
-        001
-        >>> print(result[0]['BMI'])
-        Normal
-        >>> print(result[0]['BIRTHDAY'])
-        1-1-1996
-        >>> print(result[0]['SALARY'])
-        12
-        """
+
         try:
             wb = openpyxl.load_workbook(filename)
             sheet = wb.active
