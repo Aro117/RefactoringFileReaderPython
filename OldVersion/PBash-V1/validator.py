@@ -129,7 +129,6 @@ class Validator(IFileValidator):
         return True
 
     def check_hud(self, rule, value):
-
         try:
             if not re.match(rule, value):
                 print('{} is invalid!'.format(value), file=sys.stderr)

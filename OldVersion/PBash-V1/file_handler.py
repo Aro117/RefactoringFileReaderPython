@@ -55,6 +55,34 @@ class FileHandler:
             print("There were no valid entries in the file", file=sys.stderr)
             return False
 
+    def excel_reader(self, filename):
+
+        try:
+            wb = openpyxl.load_workbook(filename)
+            sheet = wb.active
+            the_list = []
+            for x in range(2, 29):
+                employee = dict()
+                employee["EMPID"] = sheet.cell(column=1, row=x).value
+                employee["GENDER"] = sheet.cell(column=2, row=x).value
+                employee["AGE"] = sheet.cell(column=3, row=x).value
+                employee["SALES"] = sheet.cell(column=4, row=x).value
+                employee["BMI"] = sheet.cell(column=5, row=x).value
+                employee["SALARY"] = sheet.cell(column=6, row=x).value
+                employee["BIRTHDAY"] = sheet.cell(column=7, row=x).value
+                if self.validator.check_line(employee):
+                    the_list.append(employee)
+                else:
+                    print('Entry failed validation', file=sys.stderr)
+            if self.validator.check_data_set(the_list):
+                return the_list
+            else:
+                print("There were no valid entries in the file", file=sys.stderr)
+                return False
+        except FileNotFoundError:
+            print("File not found!", file=sys.stderr)
+            return False
+
     # hasitha
     def csv_dict_reader(self, filename):
         try:
@@ -125,33 +153,7 @@ class FileHandler:
             print('The help file was not found', file=sys.stderr)
         return "No such command."
 
-    def excel_reader(self, filename):
 
-        try:
-            wb = openpyxl.load_workbook(filename)
-            sheet = wb.active
-            the_list = []
-            for x in range(2, 29):
-                employee = dict()
-                employee["EMPID"] = sheet.cell(column=1, row=x).value
-                employee["GENDER"] = sheet.cell(column=2, row=x).value
-                employee["AGE"] = sheet.cell(column=3, row=x).value
-                employee["SALES"] = sheet.cell(column=4, row=x).value
-                employee["BMI"] = sheet.cell(column=5, row=x).value
-                employee["SALARY"] = sheet.cell(column=6, row=x).value
-                employee["BIRTHDAY"] = sheet.cell(column=7, row=x).value
-                if self.validator.check_line(employee):
-                    the_list.append(employee)
-                else:
-                    print('Entry failed validation', file=sys.stderr)
-            if self.validator.check_data_set(the_list):
-                return the_list
-            else:
-                print("There were no valid entries in the file", file=sys.stderr)
-                return False
-        except FileNotFoundError:
-            print("File not found!", file=sys.stderr)
-            return False
 
 if __name__ == "__main__":
     import doctest
