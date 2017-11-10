@@ -186,25 +186,27 @@ class Validator(IFileValidator):
             print('The date was in an invalid format', file=sys.stderr)
             return False
 
-    # Tim
+    def birthday_maker(self, birthday):
+        date = birthday.split("-")
+        return date.datetime(int(date[2]), int(date[1]), int(date[0]))
+
     def check_birthday_against_age(self, birthday, age):
 
         if self.check_birthday(birthday):
             return
         else:
-            day_month_year = birthday.split("-")
             # adding age because we just want to compare month and day
-            birth = date.datetime(int(day_month_year[2]), int(day_month_year[1]), int(day_month_year[0]))
+            mybirth = self.birthday_maker(birthday)
             today = date.datetime.today()
-            if birth.month < today.month:
+            if mybirth.month < today.month:
                 # Had a birthday already this year
-                return int(age) == today.year - int(day_month_year[2])
-            elif birth.month == today.month and birth.day < today.day:
+                return int(age) == today.year - int(mybirth[2])
+            elif mybirth.month == today.month and mybirth.day < today.day:
                 # Had a birthday already this year (this month)
-                return int(age) == today.year - int(day_month_year[2])
+                return int(age) == today.year - int(mybirth[2])
             else:
                 # Hasn't had a birthday yet this year.
-                return int(age) == today.year - int(day_month_year[2]) - 1
+                return int(age) == today.year - int(mybirth[2]) - 1
 
     # Tim
     def check_in_attributes(self, query_attribute):
