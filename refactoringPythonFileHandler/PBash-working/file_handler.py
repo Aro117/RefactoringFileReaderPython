@@ -13,17 +13,9 @@ class FileHandler:
         }
 
     def open(self, file_path):
-        if re.search(r'\.csv$', file_path):
-            return self.csv_dict_reader(file_path)
-        elif re.search(r'\.txt$', file_path):
-            return self.txt_dict_reader(file_path)
-        elif re.search(r'\.xlsx$', file_path):
-            result = self.excel_reader(file_path)
-            if result and self.validator.check_data_set(result):
-                return result
-            else:
-                print("There were no valid entries in the file", file=sys.stderr)
-                return False
+        extension = self.file_type[file_path.split(".")[-1]]
+        if extension in self.file_type:
+            return self.file_type[extension].read_file(file_path)
         else:
             print('Invalid file extension', file=sys.stderr)
             return False
