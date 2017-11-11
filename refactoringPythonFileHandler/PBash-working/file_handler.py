@@ -7,6 +7,10 @@ from file_reader import *
 class FileHandler:
     def __init__(self, new_validator):
         self.validator = new_validator
+        self.file_type = {'.csv':CSVReader(self.validator),
+                           '.txt': TXTReader(self.validator),
+                           '.xlsx': XLSXReader(self.validator)
+        }
 
     def open(self, file_path):
         if re.search(r'\.csv$', file_path):
