@@ -1,23 +1,24 @@
 from __future__ import print_function
 import sys
-import re
-from validator import Validator
-from file_reader import *
+from file_reader import CSVReader, TXTReader, XLSXReader
+
+
 
 class FileHandler:
     def __init__(self, new_validator):
         self.validator = new_validator
-        self.file_type = {'.csv':CSVReader(self.validator),
-                           '.txt': TXTReader(self.validator),
-                           '.xlsx': XLSXReader(self.validator)
+        self.file_type = {'csv': CSVReader(self.validator),
+                           'txt': TXTReader(self.validator),
+                           'xlsx': XLSXReader(self.validator)
         }
 
     def open(self, file_path):
-        extension = self.file_type[file_path.split(".")[-1]]
-        if extension in self.file_type:
+        extension = file_path.split(".")[-1]
+        if extension in self.file_type.keys():
             return self.file_type[extension].read_file(file_path)
         else:
             print('Invalid file extension', file=sys.stderr)
+            print(extension)
             return False
 
     # Tim
@@ -61,8 +62,3 @@ class FileHandler:
             print('The help file was not found', file=sys.stderr)
         return "No such command."
 
-
-
-if __name__ == "__main__":
-    import doctest
-    doctest.testmod(verbose=1)
