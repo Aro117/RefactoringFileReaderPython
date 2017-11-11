@@ -39,6 +39,10 @@ class FileHandler:
                 print('The file was in an invalid format', file=sys.stderr)
                 return False
         return rules
+        
+
+    def set_rules(self):
+        self.validator.set_rules(self.open_rules())
 
     # Rosemary
     @staticmethod
