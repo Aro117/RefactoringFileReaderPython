@@ -1,7 +1,7 @@
 import unittest
-from validator import Validator
-from file_reader import *
+from validator import *
 from file_handler import *
+
 
 class FileReaderTests(unittest.TestCase):
     def test_csv(self):
@@ -45,5 +45,5 @@ class FileReaderTests(unittest.TestCase):
 
 
 
-suite = unittest.TestLoader().loadTestsFromTestCase(FileReaderTestsTests)
+suite = unittest.TestLoader().loadTestsFromTestCase(FileReaderTests)
 unittest.TextTestRunner(verbosity=1).run(suite)

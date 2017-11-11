@@ -3,7 +3,6 @@ import sys
 from file_reader import CSVReader, TXTReader, XLSXReader
 
 
-
 class FileHandler:
     def __init__(self, new_validator):
         self.validator = new_validator
@@ -40,10 +39,6 @@ class FileHandler:
                 print('The file was in an invalid format', file=sys.stderr)
                 return False
         return rules
-
-    # Tim
-    def set_rules(self):
-        self.validator.set_rules(self.open_rules())
 
     # Rosemary
     @staticmethod

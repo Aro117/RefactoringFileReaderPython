@@ -5,6 +5,7 @@ import re
 import openpyxl
 from validator import Validator
 
+
 class FileReader(metaclass=ABCMeta):
     @abstractmethod
     def read_file(self, filename):
